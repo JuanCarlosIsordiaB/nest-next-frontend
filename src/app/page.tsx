@@ -1,7 +1,7 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { getProducts } from "./products/products.api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import CardProduct  from "@/components/client-components/CardProduct";
 
 
 
@@ -18,23 +18,10 @@ export default async function Home() {
           <Button>Create Product</Button>
         </Link>
       </div>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid m:grid-cols-2 xl:grid-cols-4 gap-3">
         {products &&
-          products.map((product: any) => (
-            <Card key={product.id} className="">
-              {
-                product.image !== 'image.url' && <img src={product.image}  className="w-full h-40 object-cover" />
-              }
-              <CardContent>
-                <CardHeader>
-                  <CardTitle>{product.name}</CardTitle>
-                </CardHeader>
-                <p>{product.name}</p>
-                <Button>
-                    Buy for ${product.price}
-                </Button>
-              </CardContent>
-            </Card>
+          products.map((product:any) => (
+            <CardProduct {...product} key={product.id}  />
           ))}
       </div>
     </div>

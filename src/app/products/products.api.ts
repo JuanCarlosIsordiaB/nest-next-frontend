@@ -12,3 +12,10 @@ export async function createProduct(productData: any){
     const data = await res.json();
     
 }
+
+
+export async function deleteProduct(id:string) {
+    const res = await fetch(`http://localhost:4000/api/products/${id}`, {method: 'DELETE'});
+    const data = await res.json();
+    return data;
+}
