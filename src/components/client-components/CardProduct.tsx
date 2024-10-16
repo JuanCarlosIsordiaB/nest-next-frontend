@@ -13,11 +13,11 @@ export const CardProduct =  (product:any) => {
   const handleDeleteProduct =  async (id:string) => {
     console.log(id);
     await deleteProduct(id);
-    router.refresh();
+    router.refresh();  
   }
     
   return (
-    <Card key={product.id} className="">
+    <Card key={product.id} className="" onClick={() => router.push(`products/${product.id}`)}>
       {product.image !== "image.url" && (
         <img src={product.image} className="w-full h-40 object-cover" />
       )}
