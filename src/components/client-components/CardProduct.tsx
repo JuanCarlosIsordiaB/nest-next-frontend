@@ -3,13 +3,17 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import { deleteProduct } from "@/app/products/products.api";
+import { useRouter } from "next/navigation";
 
 
 
 export const CardProduct =  (product:any) => {
+  const router = useRouter();
 
-  const handleDeleteProduct =  (id:string) => {
+  const handleDeleteProduct =  async (id:string) => {
     console.log(id);
+    await deleteProduct(id);
+    router.refresh();
   }
     
   return (
