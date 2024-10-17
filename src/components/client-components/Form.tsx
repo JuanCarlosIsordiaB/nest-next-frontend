@@ -11,16 +11,32 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { createProduct } from "@/app/products/products.api";
-import { useRouter } from "next/navigation";
+import { createProduct, updateProduct } from "@/app/products/products.api";
+import { useParams, useRouter } from "next/navigation";
 
-const ProductForm = () => {
-  const { register, handleSubmit } = useForm();
+const ProductForm = ({ product }: any) => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      name: product?.name,
+      description: product?.description,
+      price: product?.price,
+      image: product?.image,
+    },
+  });
   const router = useRouter();
+  const params = useParams<{ id: string }>();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await createProduct({ ...data, price: parseFloat(data.price) });
+      if (params?.id) {
+        await updateProduct(params.id, {
+          ...data,
+          price: parseFloat(data.price),
+        });
+      } else {
+        await createProduct({ ...data, price: parseFloat(data.price) });
+      }
+
       router.push("/");
       router.refresh();
     } catch (error) {
@@ -30,7 +46,7 @@ const ProductForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Crear nuevo Producto</CardTitle>
+        <CardTitle>{params.id ? "Editar" : "Crear"} Producto</CardTitle>
         <CardDescription>
           Crea tus nuevos productos con sus caracetristicas
         </CardDescription>
@@ -45,7 +61,7 @@ const ProductForm = () => {
           <Input {...register("price")} />
           <Label>Image</Label>
           <Input {...register("image")} />
-          <Button>Crear Producto</Button>
+          <Button>{params.id ? "Update" : "Create"}</Button>
         </form>
       </CardContent>
     </Card>

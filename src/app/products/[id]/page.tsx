@@ -5,8 +5,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 
+interface Props {
+  params: {
+    id: string;
+  };
+}
 
-const ProductDetailPage = async ({ params }) => {
+
+const ProductDetailPage = async ({ params }:Props) => {
   
   const { name, description, image, price } = await getProduct(params.id);
   return (

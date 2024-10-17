@@ -17,9 +17,9 @@ export const CardProduct =  (product:any) => {
   }
     
   return (
-    <Card key={product.id} className="" onClick={() => router.push(`products/${product.id}`)}>
+    <Card key={product.id} className="" >
       {product.image !== "image.url" && (
-        <img src={product.image} className="w-full h-40 object-cover" />
+        <img src={product.image} className="w-full h-40 object-cover" onClick={() => router.push(`products/${product.id}`)} />
       )}
       <CardContent>
         <CardHeader>
@@ -27,7 +27,7 @@ export const CardProduct =  (product:any) => {
         </CardHeader>
         <p>{product.name}</p>
         <div className="flex">
-          <Button>Buy for ${product.price}</Button>
+          <Button onClick={() => {router.push(`/products/${product.id}/edit`)}}>Edit </Button>
           <Button onClick={() => handleDeleteProduct(product.id)}  className="bg-red-600 hover:bg-red-800">Delete</Button>
         </div>
       </CardContent>
